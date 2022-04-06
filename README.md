@@ -20,3 +20,8 @@ How to post docs for indexing:
 ./bin/post -c lat-misc ~/Documents
 ```
 
+To stop solr:
+```
+./bin/solr stop -all
+```
+
