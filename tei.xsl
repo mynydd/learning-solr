@@ -23,7 +23,7 @@
 </xsl:template>
 
 <xsl:template match="tei:idno[@type='shelfmark']">
-    <field name="shelfmark"><xsl:value-of select="."/></field>
+    <field name="id"><xsl:value-of select="."/></field>
 </xsl:template>
 
 <!-- This won't work well when there are multiple
