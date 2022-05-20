@@ -24,13 +24,15 @@
 
 <xsl:template match="tei:idno[@type='shelfmark']">
     <field name="id"><xsl:value-of select="."/></field>
+    <field name="shelfmark"><xsl:value-of select="."/></field>
 </xsl:template>
 
-<!-- This won't work well when there are multiple
-     items/titles. Is there a way of putting multiple
-     values into a field? -->
-<xsl:template match="tei:msItem/tei:title">
+<xsl:template match="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)]">
     <field name="title"><xsl:value-of select="."/></field>
+</xsl:template>
+
+<xsl:template match="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='collection']">
+    <field name="title_of_collection"><xsl:value-of select="."/></field>
 </xsl:template>
 
 </xsl:stylesheet>
