@@ -32,6 +32,10 @@ to add a field:
 ```
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"title", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/medieval/schema
 ```
+boolean field example:
+```
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"is_composite", "type":"boolean", "default":"false", "multiValued":false, "stored":true}}' http://localhost:8983/solr/medieval/schema
+```
 
 ## How to post docs for indexing
 ```
