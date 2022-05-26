@@ -36,11 +36,16 @@ boolean field example:
 ```
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"is_composite", "type":"boolean", "default":"false", "multiValued":false, "stored":true}}' http://localhost:8983/solr/medieval/schema
 ```
+copy field example
+```
+curl -X POST -H 'Content-type:application/json' --data-binary '{ "add-copy-field":{ "source":"title", "dest":[ "_text_" ]} }' http://localhost:8983/solr/medieval/schema
+```
 
 ## How to post docs for indexing
 ```
 ./bin/post -c medieval ~/Documents
 ```
+
 
 ## How to delete a collection:
 Collections can be deleted using the admin ui.
@@ -51,4 +56,12 @@ Or from the command line: `bin/solr delete -c medieval`
 ```
 ./bin/solr stop -all
 ```
+## How to control which fields are searched by default:
+Refer to https://solr.apache.org/guide/8_11/initparams-in-solrconfig.html
+
+## How to retrieve config
+```
+http://localhost:8983/solr/medieval/config
+```
+In the return value it can be seen that the default field to which searches are directed is `_text_` (under `initParams`).
 

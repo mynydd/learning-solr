@@ -33,22 +33,12 @@
                 <field name="id"><xsl:value-of select="@xml:id"/></field>
                 <field name="shelfmark"><xsl:value-of select="./tei:msIdentifier//tei:idno[@type='part']"/></field>
                 <field name="is_part">true</field>
+                <xsl:for-each select=".//tei:author">
+                    <field name="author_s"><xsl:value-of select="."/></field>
+                </xsl:for-each>
             </doc>
         </xsl:for-each>
     </doc>
-</xsl:template>
-
-<xsl:template match="tei:idno[@type='shelfmark']">
-    <doc>
-        <field name="id"><xsl:value-of select="."/></field>
-        <field name="shelfmark"><xsl:value-of select="."/></field>
-    </doc>
-</xsl:template>
-
-<xsl:template match="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)]">
-</xsl:template>
-
-<xsl:template match="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='collection']">
 </xsl:template>
 
 </xsl:stylesheet>
