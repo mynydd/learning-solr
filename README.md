@@ -28,6 +28,10 @@ or just the fields:
 ```
 http://127.0.0.1:8983/solr/medieval/schema/fields
 ```
+or the fieldtypes
+```
+http://127.0.0.1:8983/solr/medieval/schema/fieldtypes
+```
 to add a field:
 ```
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"title", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/medieval/schema
