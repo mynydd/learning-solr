@@ -1,71 +1,34 @@
-# tei-solr
+# Learning Solr
 
-## Start Solr
+## Basics
+Start Solr: `./bin/solr start`
 
+Stop solr: `./bin/solr stop`
+
+Create a core: `./bin/solr create_core -c restaurants` or `cp -r ../solr-in-action/example-docs/ch8/cores/restaurants server/solr/`
+
+Delete a core: `bin/solr delete -c restaurants` (or use Admin UI)
+
+Post docs: `bin/post -c restaurants ../solr-in-action/example-docs/ch8/documents/restaurants.json`
+
+[Admin UI](http://localhost:8983/solr/#/)
+
+[Solr Tutorial](https://solr.apache.org/guide/8_11/solr-tutorial.html)
+
+[Solr In Action](https://www.manning.com/books/solr-in-action)
+
+## Facet
+example:
 ```
-./bin/solr start -c -p 8983 -s example/cloud/node1/solr
-./bin/solr start -c -p 7574 -s example/cloud/node2/solr -z localhost:9983
+http://localhost:8983/solr/restaurants/select?indent=true&q.op=OR&q=*%3A*&rows=0&facet=true&facet.field=tags&facet.field=state&f.state.facet.sort=index&f.tags.facet.limit=5
 ```
 
-Then go to [admin UI](http://localhost:8983/solr/#/)
-
-[Solr Tutorial](https://solr.apache.org/guide/8_11/solr-tutorial.html) is a good source of help.
-How to create a collection:
-```
-./bin/solr create -c medieval -s 2 -rf 2
-```
-To disable data-driven schema functionality:
-```
-bin/solr config -c medieval -p 7574 -action set-user-property -property update.autoCreateFields -value false
-```
 
 ## Schema API
-To get the whole schema:
-```
-http://127.0.0.1:8983/solr/medieval/schema
-```
-or just the fields:
-```
-http://127.0.0.1:8983/solr/medieval/schema/fields
-```
-or the fieldtypes
-```
-http://127.0.0.1:8983/solr/medieval/schema/fieldtypes
-```
-to add a field:
-```
-curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"title", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/medieval/schema
-```
-boolean field example:
-```
-curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"is_composite", "type":"boolean", "default":"false", "multiValued":false, "stored":true}}' http://localhost:8983/solr/medieval/schema
-```
-copy field example
-```
-curl -X POST -H 'Content-type:application/json' --data-binary '{ "add-copy-field":{ "source":"title", "dest":[ "_text_" ]} }' http://localhost:8983/solr/medieval/schema
-```
+Get schema: `http://127.0.0.1:8983/solr/restaurants/schema`
 
-## How to post docs for indexing
-```
-./bin/post -c medieval ~/Documents
-```
+or just the fields: `http://127.0.0.1:8983/solr/restaurants/schema/fields`
 
+or the fieldtypes: ` http://127.0.0.1:8983/solr/restaurants/schema/fieldtypes`
 
-## How to delete a collection:
-Collections can be deleted using the admin ui.
-
-Or from the command line: `bin/solr delete -c medieval`
-
-## How to stop solr
-```
-./bin/solr stop -all
-```
-## How to control which fields are searched by default:
-Refer to https://solr.apache.org/guide/8_11/initparams-in-solrconfig.html
-
-## How to retrieve config
-```
-http://localhost:8983/solr/medieval/config
-```
-In the return value it can be seen that the default field to which searches are directed is `_text_` (under `initParams`).
-
+Get config: `http://localhost:8983/solr/restaurants/config`
